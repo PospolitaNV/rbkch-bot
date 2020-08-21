@@ -1,0 +1,10 @@
+telegram.bot.token: ${BOT_TOKEN}
+
+rbkch.chat.id: ${CHAT_ID}
+rbkch.retra.link: ${RETRA_LINK}
+rbkch.chats: ${CHATS}
+
+server:
+  port: ${PORT}
+
+my.id: ${MY_ID}
