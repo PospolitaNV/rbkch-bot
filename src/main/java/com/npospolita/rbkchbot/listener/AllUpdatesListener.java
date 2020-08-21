@@ -43,8 +43,7 @@ public class AllUpdatesListener implements UpdatesListener {
 
         final List<Update> updates = list.stream()
                 .filter(update -> update.message() != null)
-                .filter(update -> fromChat(update)
-                    || fromMe(update))
+                .filter(update -> fromChat(update) || fromMe(update))
                 .collect(Collectors.toList());
 
         for (Update update : updates) {
