@@ -34,7 +34,7 @@ public class ChatsListHandler implements Handler {
         Message message = update.message();
 
         SendMessage request = new SendMessage(message.chat().id(), chatList)
-                .parseMode(ParseMode.HTML)
+                .parseMode(ParseMode.MarkdownV2)
                 .disableWebPagePreview(true)
                 .disableNotification(true)
                 .replyToMessageId(message.messageId());
