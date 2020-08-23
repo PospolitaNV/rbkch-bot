@@ -1,5 +1,6 @@
 package com.npospolita.rbkchbot.handler;
 
+import com.npospolita.rbkchbot.api.TelegramApi;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
@@ -22,7 +23,7 @@ public class RetraHandler implements Handler {
 
     private static final String COMMAND = "/retra";
 
-    private final TelegramBot bot;
+    private final TelegramApi api;
 
     @Value("${rbkch.retra.link}")
     String retraLink;
@@ -36,18 +37,7 @@ public class RetraHandler implements Handler {
 
     @Override
     public void handle(Update update) {
-        Message message = update.message();
-
-        SendMessage request = new SendMessage(message.chat().id(), retraLink)
-                .parseMode(ParseMode.HTML)
-                .disableWebPagePreview(true)
-                .disableNotification(true)
-                .replyToMessageId(message.messageId());
-
-        SendResponse sendResponse;
-        do {
-            sendResponse = bot.execute(request);
-        } while (!sendResponse.isOk());
+        api.sendMessage(update, retraLink);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.npospolita.rbkchbot.handler;
 
+import com.npospolita.rbkchbot.api.TelegramApi;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
@@ -17,7 +18,7 @@ public class ChatsListHandler implements Handler {
 
     private static final String COMMAND = "/chats";
 
-    private final TelegramBot bot;
+    private final TelegramApi api;
 
     @Value("${rbkch.chats}")
     String chatList;
@@ -31,18 +32,7 @@ public class ChatsListHandler implements Handler {
 
     @Override
     public void handle(Update update) {
-        Message message = update.message();
-
-        SendMessage request = new SendMessage(message.chat().id(), chatList)
-                .parseMode(ParseMode.MarkdownV2)
-                .disableWebPagePreview(true)
-                .disableNotification(true)
-                .replyToMessageId(message.messageId());
-
-        SendResponse sendResponse;
-        do {
-            sendResponse = bot.execute(request);
-        } while (!sendResponse.isOk());
+        api.sendMessage(update, chatList);
     }
 
 }

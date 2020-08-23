@@ -1,5 +1,6 @@
 package com.npospolita.rbkchbot.handler;
 
+import com.npospolita.rbkchbot.api.TelegramApi;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
@@ -21,7 +22,7 @@ public class ChantHandler implements Handler {
 
     private static final String COMMAND = "/spartak";
 
-    private final TelegramBot bot;
+    private final TelegramApi api;
 
     @Override
     public boolean canHandle(Update update) {
@@ -32,18 +33,7 @@ public class ChantHandler implements Handler {
 
     @Override
     public void handle(Update update) {
-        Message message = update.message();
-
-        SendMessage request = new SendMessage(message.chat().id(), randomChant())
-                .parseMode(ParseMode.HTML)
-                .disableWebPagePreview(true)
-                .disableNotification(true)
-                .replyToMessageId(message.messageId());
-
-        SendResponse sendResponse;
-        do {
-            sendResponse = bot.execute(request);
-        } while (!sendResponse.isOk());
+        api.sendMessage(update, randomChant());
     }
 
     private String randomChant() {
