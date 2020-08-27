@@ -1,7 +1,6 @@
 package com.npospolita.rbkchbot.handler;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
-import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ public class YouAreRobotHandler implements Handler {
 
     @Override
     public boolean canHandle(Update update) {
-        return !update.message().from().isBot() && Double.compare(random.nextDouble(), 0.003) < 0;
+        return !update.message().from().isBot() && Double.compare(random.nextDouble(), 0.005) < 0;
     }
 
     @Override

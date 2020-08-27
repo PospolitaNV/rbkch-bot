@@ -4,28 +4,34 @@ import com.npospolita.rbkchbot.api.TelegramApi;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-//@Component
+@Slf4j
+@Component
 @RequiredArgsConstructor
-public class AreYouRobotHandler implements Handler {
+public class AddNewCommandHandler implements Handler {
+
+    private static final String COMMAND = "/add";
 
     private final TelegramApi api;
 
-    private static final String TAKI_DA_STICKER_FILE_ID = "CAACAgIAAxkBAAMeXz0jNewZB_tO6284d688zViwKPsAAjMBAALdEPsV4z9z-2MJv8AbBA";
+    @Value("${my.id}")
+    Integer myId;
 
     @Override
     public boolean canHandle(Update update) {
         Message message = update.message();
         return !StringUtils.isEmpty(message.text())
-                && !message.from().isBot()
-                && message.text().equalsIgnoreCase("ты робот?");
+                && (message.text().contains(COMMAND) && update.message().from().id().equals(myId));
     }
 
     @Override
     public void handle(Update update) {
-        api.sendSticker(update, TAKI_DA_STICKER_FILE_ID);
+        String text = update.message().text();
+        String[] tokens = text.split(" ");
+        api.addCommand(tokens[1], tokens[2]);
     }
-
 }

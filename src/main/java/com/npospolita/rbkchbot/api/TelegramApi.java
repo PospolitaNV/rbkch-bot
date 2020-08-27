@@ -1,16 +1,20 @@
 package com.npospolita.rbkchbot.api;
 
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
-import com.pengrad.telegrambot.request.SendDice;
-import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.request.SendSticker;
+import com.pengrad.telegrambot.request.*;
+import com.pengrad.telegrambot.response.BaseResponse;
+import com.pengrad.telegrambot.response.GetMyCommandsResponse;
 import com.pengrad.telegrambot.response.SendResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -64,6 +68,26 @@ public class TelegramApi {
 
         if (response.message().dice().value() == 6) {
             sendMessage(response.message(), "Ебать как могу");
+        }
+    }
+
+    public void addCommand(String command, String description) {
+        GetMyCommands getMyCommands = new GetMyCommands();
+
+        GetMyCommandsResponse commandsResponse = bot.execute(getMyCommands);
+
+        BotCommand[] commands = commandsResponse.commands();
+
+        List<BotCommand> botCommands = Arrays.asList(commands);
+
+        botCommands.add(new BotCommand(command, description));
+
+        SetMyCommands setMyCommands = new SetMyCommands(botCommands.toArray(new BotCommand[0]));
+
+        BaseResponse response = bot.execute(setMyCommands);
+
+        if (!response.isOk()) {
+            log.error("error: {}", response);
         }
     }
 }
