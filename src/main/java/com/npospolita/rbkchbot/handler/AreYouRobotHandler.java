@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-//@Component
+//@Component //todo update for rofls
 @RequiredArgsConstructor
 public class AreYouRobotHandler implements Handler {
 

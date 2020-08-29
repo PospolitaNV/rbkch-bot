@@ -25,7 +25,7 @@ public class AddNewCommandHandler implements Handler {
     public boolean canHandle(Update update) {
         Message message = update.message();
         return !StringUtils.isEmpty(message.text())
-                && (message.text().contains(COMMAND) && update.message().from().id().equals(myId));
+                && (message.text().startsWith(COMMAND) && update.message().from().id().equals(myId));
     }
 
     @Override

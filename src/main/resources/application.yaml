@@ -4,6 +4,9 @@ rbkch.chat.id: ${CHAT_ID}
 rbkch.retra.link: ${RETRA_LINK}
 rbkch.chats: ${CHATS}
 
+kuranda:
+  id: ${KURANDA_ID}
+
 server:
   port: ${PORT}
 

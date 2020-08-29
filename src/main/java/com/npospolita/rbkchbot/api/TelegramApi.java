@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,13 +24,17 @@ public class TelegramApi {
 
     private final TelegramBot bot;
 
-    public void sendMessage(Update update, String text) {
-        sendMessage(update.message(), text);
+    public void sendMessage(Update update, String text, ParseMode parseMode) {
+        sendMessage(update.message(), text, parseMode);
     }
 
-    public void sendMessage(Message message, String text) {
+    public void sendMessage(Update update, String text) {
+        sendMessage(update.message(), text, ParseMode.Markdown);
+    }
+
+    public void sendMessage(Message message, String text, ParseMode parseMode) {
         SendMessage request = new SendMessage(message.chat().id(), text)
-                .parseMode(ParseMode.Markdown)
+                .parseMode(parseMode)
                 .disableWebPagePreview(true)
                 .disableNotification(true)
                 .replyToMessageId(message.messageId());
@@ -67,18 +72,12 @@ public class TelegramApi {
         }
 
         if (response.message().dice().value() == 6) {
-            sendMessage(response.message(), "Ебать как могу");
+            sendMessage(response.message(), "Ебать как могу", ParseMode.Markdown);
         }
     }
 
     public void addCommand(String command, String description) {
-        GetMyCommands getMyCommands = new GetMyCommands();
-
-        GetMyCommandsResponse commandsResponse = bot.execute(getMyCommands);
-
-        BotCommand[] commands = commandsResponse.commands();
-
-        List<BotCommand> botCommands = Arrays.asList(commands);
+        List<BotCommand> botCommands = getCommands();
 
         botCommands.add(new BotCommand(command, description));
 
@@ -89,5 +88,13 @@ public class TelegramApi {
         if (!response.isOk()) {
             log.error("error: {}", response);
         }
+    }
+
+    public List<BotCommand> getCommands() {
+        GetMyCommands getMyCommands = new GetMyCommands();
+
+        GetMyCommandsResponse commandsResponse = bot.execute(getMyCommands);
+
+        return new ArrayList<>(Arrays.asList(commandsResponse.commands()));
     }
 }
