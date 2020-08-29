@@ -35,7 +35,7 @@ public class TelegramApi {
     public void sendMessage(Message message, String text, ParseMode parseMode) {
         SendMessage request = new SendMessage(message.chat().id(), text)
                 .parseMode(parseMode)
-                .disableWebPagePreview(true)
+                .disableWebPagePreview(false)
                 .disableNotification(true)
                 .replyToMessageId(message.messageId());
 
