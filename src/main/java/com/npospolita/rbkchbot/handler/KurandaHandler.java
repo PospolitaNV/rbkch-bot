@@ -26,7 +26,7 @@ public class KurandaHandler implements Handler {
     @Override
     public boolean canHandle(Update update) {
         Message message = update.message();
-        return message.from().id().equals(kurandaId)
+        return message.from().id().equals(kurandaId) && message.text() != null
                 && isPidorCommand(message.text().toLowerCase());
     }
 
