@@ -32,10 +32,24 @@ public class TelegramApi {
         sendMessage(update.message(), text, ParseMode.Markdown);
     }
 
+    public void sendMessageWithPreview(Message message, String text) {
+            SendMessage request = new SendMessage(message.chat().id(), text)
+                    .parseMode(ParseMode.Markdown)
+                    .disableWebPagePreview(false)
+                    .disableNotification(true)
+                    .replyToMessageId(message.messageId());
+
+            SendResponse response = bot.execute(request);
+
+            if (!response.isOk()) {
+                log.error("error: {}", response);
+            }
+    }
+
     public void sendMessage(Message message, String text, ParseMode parseMode) {
         SendMessage request = new SendMessage(message.chat().id(), text)
                 .parseMode(parseMode)
-                .disableWebPagePreview(false)
+                .disableWebPagePreview(true)
                 .disableNotification(true)
                 .replyToMessageId(message.messageId());
 
