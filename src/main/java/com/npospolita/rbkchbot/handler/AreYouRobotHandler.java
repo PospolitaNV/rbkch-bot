@@ -7,13 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-//@Component //todo update for rofls
+@Component
 @RequiredArgsConstructor
 public class AreYouRobotHandler implements Handler {
 
     private final TelegramApi api;
-
-    private static final String TAKI_DA_STICKER_FILE_ID = "CAACAgIAAxkBAAMeXz0jNewZB_tO6284d688zViwKPsAAjMBAALdEPsV4z9z-2MJv8AbBA";
 
     @Override
     public boolean canHandle(Update update) {
@@ -25,7 +23,7 @@ public class AreYouRobotHandler implements Handler {
 
     @Override
     public void handle(Update update) {
-        api.sendSticker(update, TAKI_DA_STICKER_FILE_ID);
+        api.sendMessage(update, "Я календарь");
     }
 
 }
