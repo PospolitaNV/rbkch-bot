@@ -37,8 +37,8 @@ public class KurandaHandler implements Handler {
 
     private boolean isPidorCommand(String text) {
         return text.startsWith("/") && notDefaultCommand(text)
-        || text.length() < 20 && text.contains("пидор") && (text.contains("спартак") || text.contains("робот") || text.contains("ты"))
-        || text.length() < 20 && text.contains("pidor") && (text.contains("spartak") || text.contains("robot") || text.contains("ti"));
+        || text.length() < 30 && text.contains("пидор") && (text.contains("спартак") || text.contains("робот") || text.contains("ты"))
+        || text.length() < 30 && text.contains("pidor") && (text.contains("spartak") || text.contains("robot") || text.contains("ti"));
     }
 
     private boolean notDefaultCommand(String text) {
