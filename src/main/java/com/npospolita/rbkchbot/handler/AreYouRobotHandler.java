@@ -4,10 +4,9 @@ import com.npospolita.rbkchbot.api.TelegramApi;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class AreYouRobotHandler implements Handler {
 
