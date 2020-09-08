@@ -84,10 +84,6 @@ public class TelegramApi {
         if (!response.isOk()) {
             log.error("error: {}", response);
         }
-
-        if (response.message().dice().value() == 6) {
-            sendMessage(response.message(), "Ебать как могу", ParseMode.Markdown);
-        }
     }
 
     public void addCommand(String command, String description) {
