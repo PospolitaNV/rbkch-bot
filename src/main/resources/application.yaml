@@ -7,6 +7,9 @@ rbkch.chats: ${CHATS}
 kuranda:
   id: ${KURANDA_ID}
 
+sasha:
+  id: ${SASHA_ID}
+
 server:
   port: ${PORT}
 

@@ -3,16 +3,11 @@ package com.npospolita.rbkchbot.listener;
 import com.npospolita.rbkchbot.handler.Handler;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.model.request.ParseMode;
-import com.pengrad.telegrambot.request.SendMessage;
-import com.pengrad.telegrambot.response.SendResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -29,6 +24,9 @@ public class AllUpdatesListener implements UpdatesListener {
     @Value("${my.id}")
     Integer myId;
 
+    @Value("${sasha.id}")
+    Integer sashaId;
+
     private final TelegramBot bot;
     private final List<Handler> handlers;
 
@@ -43,7 +41,7 @@ public class AllUpdatesListener implements UpdatesListener {
 
         final List<Update> updates = list.stream()
                 .filter(update -> update.message() != null)
-                .filter(update -> fromChat(update) || fromMe(update))
+                .filter(update -> fromChat(update) || fromMe(update) || fromLeaver(update))
                 .collect(Collectors.toList());
 
         for (Update update : updates) {
@@ -55,6 +53,10 @@ public class AllUpdatesListener implements UpdatesListener {
         }
 
         return CONFIRMED_UPDATES_ALL;
+    }
+
+    private boolean fromLeaver(Update update) {
+        return update.message().from().id().equals(sashaId);
     }
 
     private boolean fromChat(Update update) {
