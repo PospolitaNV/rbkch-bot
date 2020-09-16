@@ -10,6 +10,9 @@ kuranda:
 sasha:
   id: ${SASHA_ID}
 
+tolik:
+  id: ${TOLIK_ID}
+
 server:
   port: ${PORT}
 

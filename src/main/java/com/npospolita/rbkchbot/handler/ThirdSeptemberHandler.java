@@ -13,7 +13,7 @@ import java.time.Month;
 
 @Component
 @RequiredArgsConstructor
-public class ThirdSeptemberHadler implements Handler{
+public class ThirdSeptemberHandler implements Handler{
 
     private final TelegramApi api;
 
