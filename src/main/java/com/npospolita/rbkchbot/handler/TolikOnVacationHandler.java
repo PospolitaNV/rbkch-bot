@@ -16,7 +16,6 @@ public class TolikOnVacationHandler implements Handler {
     @Value("${tolik.id}")
     Integer tolikId;
 
-
     @Override
     public boolean canHandle(Update update) {
         Message message = update.message();
