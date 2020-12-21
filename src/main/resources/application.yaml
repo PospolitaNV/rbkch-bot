@@ -12,7 +12,7 @@ hosted.url: ${HOSTED_URL:localhost}
 telegram.bot.token: ${BOT_TOKEN:test}
 #
 #rbkch.chat.id: ${CHAT_ID}
-#rbkch.retra.link: ${RETRA_LINK}
+rbkch.retra: ${RETRA_DESCRIPTION:test}
 #rbkch.chats: ${CHATS}
 #
 #kuranda:

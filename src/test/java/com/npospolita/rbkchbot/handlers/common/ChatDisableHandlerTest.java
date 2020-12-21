@@ -12,18 +12,18 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-class ChatSetupHandlerTest {
+class ChatDisableHandlerTest {
 
     @Autowired
     UpdateProcessService updateProcessService;
 
     @SpyBean
-    ChatSetupHandler handler;
+    ChatDisableHandler handler;
 
     @Test
-    void processOnlyAdminCommandStartedWithSetup() {
-        updateProcessService.process(TestData.getAdminMessageUpdateWithCommand("/setup"));
-        updateProcessService.process(TestData.getSimpleMessageUpdateWithCommand("/setup"));
+    void processOnlyAdminCommandStartedWithDisable() {
+        updateProcessService.process(TestData.getAdminMessageUpdateWithCommand("/disable"));
+        updateProcessService.process(TestData.getSimpleMessageUpdateWithCommand("/disable"));
 
         verify(handler, times(1)).handle(any());
         verify(handler, times(2)).canHandle(any());

@@ -31,7 +31,8 @@ public class ChatService {
 
 //    @Cacheable(CacheNames.WORKING_CHATS)
     public void addWorkingChat(Long chatId) {
-        workingChats.add(workingChatRepository.save(new WorkingChat(chatId)).getId());
+        workingChatRepository.save(new WorkingChat(chatId)).getId();
+        workingChats.add(chatId);
     }
 
 //    @CacheEvict(CacheNames.WORKING_CHATS)
