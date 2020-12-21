@@ -17,6 +17,7 @@ public class ChatSetupHandler extends AdminMessageHandler {
 
     @Override
     public Result handle(Update update) {
+        //todo lookup in cache-service for this chat / and add if needed
         log.info("I'm in chat setup handler!");
         return Result.CONTINUE;
     }
