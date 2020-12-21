@@ -4,7 +4,6 @@ import com.npospolita.rbkchbot.repo.WorkingChatRepository;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.npospolita.rbkchbot.service.UpdateProcessService;
 import com.pengrad.telegrambot.model.Update;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -12,7 +11,6 @@ import org.springframework.cache.CacheManager;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Disabled
 class BotIntegrationTest extends DatabaseTestBase {
 
     @Autowired
