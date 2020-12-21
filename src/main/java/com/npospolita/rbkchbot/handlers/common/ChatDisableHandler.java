@@ -14,15 +14,15 @@ import org.springframework.stereotype.Component;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
 @RequiredArgsConstructor
-public class ChatSetupHandler extends AdminMessageHandler {
+public class ChatDisableHandler extends AdminMessageHandler {
 
-    private static final String COMMAND = "/setup";
+    private static final String COMMAND = "/disable";
 
     private final ChatService chatService;
 
     @Override
     public Result handle(Update update) {
-        chatService.addWorkingChat(update.message().chat().id());
+        chatService.removeWorkingChat(update.message().chat().id());
         return Result.STOP;
     }
 

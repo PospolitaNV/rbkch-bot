@@ -4,7 +4,8 @@ import com.npospolita.rbkchbot.service.UpdateProcessService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,7 +20,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(properties = {"server.port=8080", "telegram.bot.token=test"})
+@SpringBootTest
+@AutoConfigureMockMvc
 class WebHookTest {
 
     @Value("${telegram.bot.token}")
@@ -32,7 +34,7 @@ class WebHookTest {
     UpdateProcessService updateProcessService;
 
     @Test
-    void webhookControllerIsWorking() throws Exception {
+    void webHookControllerIsWorking() throws Exception {
         mockMvc.perform(
                 post(URI.create("http://localhost:8080/" + botToken))
                         .contentType(MediaType.APPLICATION_JSON)

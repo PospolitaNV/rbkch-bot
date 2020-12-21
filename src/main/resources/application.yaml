@@ -1,5 +1,15 @@
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/n.pospolita}
+    username: ${JDBC_DATABASE_USERNAME:n.pospolita}
+    password: ${JDBC_DATABASE_PASSWORD:""}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+
 hosted.url: ${HOSTED_URL:localhost}
-telegram.bot.token: ${BOT_TOKEN}
+telegram.bot.token: ${BOT_TOKEN:test}
 #
 #rbkch.chat.id: ${CHAT_ID}
 #rbkch.retra.link: ${RETRA_LINK}
@@ -15,3 +25,4 @@ telegram.bot.token: ${BOT_TOKEN}
 #  port: ${PORT}
 #
 admin.id: ${MY_ID:123}
+
