@@ -1,5 +1,6 @@
 package com.npospolita.rbkchbot.handlers.common;
 
+import com.npospolita.rbkchbot.DatabaseTestBase;
 import com.npospolita.rbkchbot.TestData;
 import com.npospolita.rbkchbot.service.UpdateProcessService;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-class ChatSetupHandlerTest {
+class ChatSetupHandlerTest extends DatabaseTestBase {
 
     @Autowired
     UpdateProcessService updateProcessService;

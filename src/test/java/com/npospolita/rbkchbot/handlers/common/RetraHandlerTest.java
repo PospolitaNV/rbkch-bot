@@ -1,5 +1,6 @@
 package com.npospolita.rbkchbot.handlers.common;
 
+import com.npospolita.rbkchbot.DatabaseTestBase;
 import com.npospolita.rbkchbot.TestData;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.npospolita.rbkchbot.service.UpdateProcessService;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
-class RetraHandlerTest {
+class RetraHandlerTest extends DatabaseTestBase {
 
     @Autowired
     UpdateProcessService updateProcessService;
