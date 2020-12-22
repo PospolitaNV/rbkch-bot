@@ -2,7 +2,10 @@ package com.npospolita.rbkchbot.handlers.common;
 
 import com.npospolita.rbkchbot.DatabaseTestBase;
 import com.npospolita.rbkchbot.TestData;
+import com.npospolita.rbkchbot.domain.WorkingChat;
+import com.npospolita.rbkchbot.repo.WorkingChatRepository;
 import com.npospolita.rbkchbot.service.UpdateProcessService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +23,14 @@ class ChatDisableHandlerTest extends DatabaseTestBase {
 
     @SpyBean
     ChatDisableHandler handler;
+
+    @Autowired
+    WorkingChatRepository repository;
+
+    @BeforeEach
+    public void init() {
+        repository.save(new WorkingChat(-23123123123123L));
+    }
 
     @Test
     void processOnlyAdminCommandStartedWithDisable() {

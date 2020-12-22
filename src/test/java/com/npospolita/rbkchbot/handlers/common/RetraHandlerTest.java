@@ -2,6 +2,8 @@ package com.npospolita.rbkchbot.handlers.common;
 
 import com.npospolita.rbkchbot.DatabaseTestBase;
 import com.npospolita.rbkchbot.TestData;
+import com.npospolita.rbkchbot.domain.WorkingChat;
+import com.npospolita.rbkchbot.repo.WorkingChatRepository;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.npospolita.rbkchbot.service.UpdateProcessService;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +28,12 @@ class RetraHandlerTest extends DatabaseTestBase {
     @Autowired
     ChatService chatService;
 
+    @Autowired
+    WorkingChatRepository repository;
+
     @BeforeEach
     public void init() {
-        chatService.addWorkingChat(-23123123123123L);
+        repository.save(new WorkingChat(-23123123123123L));
     }
 
     @Test
