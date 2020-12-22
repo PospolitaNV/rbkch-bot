@@ -26,7 +26,7 @@ class BotIntegrationTest extends DatabaseTestBase {
     ChatService chatService;
 
     @Test
-    void repositoryTest() {
+    void chatServiceTest() {
         Update update = TestData.getAdminMessageUpdateWithCommand("/setup");
 
         assertFalse(chatService.isInWorkingChat(update.message().chat().id()));

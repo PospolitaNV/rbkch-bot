@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Slf4j
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
@@ -28,6 +29,8 @@ public class ChatSetupHandler extends AdminMessageHandler {
 
     @Override
     public boolean canHandle(Update update) {
-        return super.canHandle(update) && update.message().text().startsWith(COMMAND);
+        return super.canHandle(update)
+                && StringUtils.hasText(update.message().text())
+                && update.message().text().startsWith(COMMAND);
     }
 }

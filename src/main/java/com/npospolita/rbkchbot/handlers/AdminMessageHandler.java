@@ -10,6 +10,7 @@ public abstract class AdminMessageHandler implements Handler {
 
     @Override
     public boolean canHandle(Update update) {
-        return update.message() != null && update.message().from().id().equals(adminId);
+        return update.message() != null
+                && update.message().from().id().equals(adminId);
     }
 }
