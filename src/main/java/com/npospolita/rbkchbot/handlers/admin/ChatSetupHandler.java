@@ -1,6 +1,5 @@
-package com.npospolita.rbkchbot.handlers.common;
+package com.npospolita.rbkchbot.handlers.admin;
 
-import com.npospolita.rbkchbot.handlers.AdminMessageHandler;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.pengrad.telegrambot.model.Update;
@@ -23,7 +22,8 @@ public class ChatSetupHandler extends AdminMessageHandler {
 
     @Override
     public Result handle(Update update) {
-        chatService.addWorkingChat(update.message().chat().id());
+        String[] split = update.message().text().split("");
+        chatService.addWorkingChat(update.message().chat().id(), StringUtils.hasText(split[1]) ? split[1] : null);
         return Result.STOP;
     }
 

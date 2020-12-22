@@ -1,6 +1,5 @@
-package com.npospolita.rbkchbot.handlers.common;
+package com.npospolita.rbkchbot.handlers.admin;
 
-import com.npospolita.rbkchbot.handlers.AdminMessageHandler;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.pengrad.telegrambot.model.Update;
