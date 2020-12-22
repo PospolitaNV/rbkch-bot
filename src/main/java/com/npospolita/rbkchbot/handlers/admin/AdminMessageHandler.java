@@ -1,6 +1,7 @@
-package com.npospolita.rbkchbot.handlers;
+package com.npospolita.rbkchbot.handlers.admin;
 
 
+import com.npospolita.rbkchbot.handlers.Handler;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.beans.factory.annotation.Value;
 

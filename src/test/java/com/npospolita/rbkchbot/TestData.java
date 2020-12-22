@@ -45,7 +45,7 @@ public class TestData {
                 "      \"type\": \"supergroup\"\n" +
                 "    },\n" +
                 "    \"date\": 1579958705,\n" +
-                "    \"text\": \"" + command + "block the news\"\n" +
+                "    \"text\": \"" + command + " block the news\"\n" +
                 "  }\n" +
                 "}");
     }
@@ -89,7 +89,7 @@ public class TestData {
                 "      \"type\": \"supergroup\"\n" +
                 "    },\n" +
                 "    \"date\": 1579958705,\n" +
-                "    \"text\": \"" + command + "block the news\"\n" +
+                "    \"text\": \"" + command + "\"\n" +
                 "  }\n" +
                 "}");
     }
