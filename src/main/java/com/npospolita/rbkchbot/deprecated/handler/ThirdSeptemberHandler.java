@@ -1,4 +1,4 @@
-package com.npospolita.rbkchbot.handler;
+package com.npospolita.rbkchbot.deprecated.handler;
 
 
 import com.npospolita.rbkchbot.api.TelegramApi;
