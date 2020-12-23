@@ -25,7 +25,7 @@ public class ChatSetupHandler extends AdminMessageHandler {
     @Override
     public Result handle(Update update) {
         String[] split = update.message().text().split(" ");
-        chatService.addWorkingChat(update.message().chat().id(), StringUtils.hasText(split[1]) ? split[1] : null);
+        chatService.addWorkingChat(update.message().chat().id(), split.length > 1 ? split[1] : null);
         api.sendMessage(update, "Chat enabled.");
         return Result.STOP;
     }
