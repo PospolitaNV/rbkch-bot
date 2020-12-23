@@ -100,6 +100,20 @@ public class TelegramApi {
         }
     }
 
+    public void removeCommand(String command) {
+        List<BotCommand> botCommands = getCommands();
+
+        botCommands.removeIf(botCommand -> botCommand.command().equals(command));
+
+        SetMyCommands setMyCommands = new SetMyCommands(botCommands.toArray(new BotCommand[0]));
+
+        BaseResponse response = bot.execute(setMyCommands);
+
+        if (!response.isOk()) {
+            log.error("error: {}", response);
+        }
+    }
+
     public List<BotCommand> getCommands() {
         GetMyCommands getMyCommands = new GetMyCommands();
 

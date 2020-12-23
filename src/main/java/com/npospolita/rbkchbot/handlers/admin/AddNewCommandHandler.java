@@ -2,7 +2,6 @@ package com.npospolita.rbkchbot.handlers.admin;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
 import com.npospolita.rbkchbot.handlers.Result;
-import com.npospolita.rbkchbot.service.ChatService;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,21 +13,21 @@ import org.springframework.util.StringUtils;
 @Order
 @Component
 @RequiredArgsConstructor
-public class AddChatHandler extends AdminMessageHandler {
+public class AddNewCommandHandler extends AdminMessageHandler {
 
-    private static final String COMMAND = "/add_chat";
+    private static final String COMMAND = "/add_command";
 
     private final TelegramApi api;
-    private final ChatService chatService;
 
     @Override
     public Result handle(Update update) {
-        String[] split = update.message().text().split("-");
-        if (split.length != 3) {
-            api.sendMessage(update, "Command usage: {/add}-{description}-{link}");
+        String text = update.message().text();
+        String[] tokens = text.split("-");
+        if (tokens.length != 3) {
+            api.sendMessage(update, "Command usage: {/add_command}-{command}-{description}");
         } else {
-            chatService.addTopicChat(split[1], split[2]);
-            api.sendMessage(update, "Chat added successfully.");
+            api.addCommand(tokens[1], tokens[2]);
+            api.sendMessage(update, "Command added successfully.");
         }
         return Result.STOP;
     }
