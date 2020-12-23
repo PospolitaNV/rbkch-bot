@@ -17,7 +17,7 @@ public class AboutHandler extends CommonMessageHandler {
 
     private static final String COMMAND = "/about";
 
-    public static final String ABOUT = "@author: PospolitaNV\nFeel free to contribute: https://github.com/PospolitaNV/rbkch-bot";
+    public static final String ABOUT = "author: PospolitaNV\nFeel free to contribute: https://github.com/PospolitaNV/rbkch-bot";
 
     private final TelegramApi telegramApi;
 
