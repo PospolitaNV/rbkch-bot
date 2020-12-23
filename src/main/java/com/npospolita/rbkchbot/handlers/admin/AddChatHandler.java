@@ -28,6 +28,7 @@ public class AddChatHandler extends AdminMessageHandler {
             api.sendMessage(update, "Command usage: {/add}-{description}-{link}");
         } else {
             chatService.addTopicChat(split[1], split[2]);
+            api.sendMessage(update, "Chat added successfully.");
         }
         return Result.STOP;
     }

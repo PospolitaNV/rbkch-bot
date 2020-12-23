@@ -1,5 +1,6 @@
 package com.npospolita.rbkchbot.handlers.admin;
 
+import com.npospolita.rbkchbot.api.TelegramApi;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.pengrad.telegrambot.model.Update;
@@ -18,11 +19,13 @@ public class ChatDisableHandler extends AdminMessageHandler {
 
     private static final String COMMAND = "/disable";
 
+    private final TelegramApi api;
     private final ChatService chatService;
 
     @Override
     public Result handle(Update update) {
         chatService.removeWorkingChat(update.message().chat().id());
+        api.sendMessage(update, "Chat disabled.");
         return Result.STOP;
     }
 
