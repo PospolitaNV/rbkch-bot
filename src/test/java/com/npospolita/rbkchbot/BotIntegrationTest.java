@@ -8,7 +8,6 @@ import com.pengrad.telegrambot.model.Update;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.cache.CacheManager;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,9 +16,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class BotIntegrationTest extends DatabaseTestBase {
-
-    @Autowired
-    CacheManager cacheManager;
 
     @Autowired
     UpdateProcessService updateProcessService;

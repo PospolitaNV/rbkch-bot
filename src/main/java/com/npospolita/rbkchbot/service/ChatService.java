@@ -32,13 +32,11 @@ public class ChatService {
         return workingChats.contains(new WorkingChat(chatId, null));
     }
 
-//    @Cacheable(CacheNames.WORKING_CHATS)
     public void addWorkingChat(Long chatId, String tag) {
         WorkingChat chat = new WorkingChat(chatId, tag);
         workingChats.add(workingChatRepository.save(chat));
     }
 
-//    @CacheEvict(CacheNames.WORKING_CHATS)
     public void removeWorkingChat(Long chatId) {
         workingChats.remove(new WorkingChat(chatId, null));
         workingChatRepository.deleteById(chatId);

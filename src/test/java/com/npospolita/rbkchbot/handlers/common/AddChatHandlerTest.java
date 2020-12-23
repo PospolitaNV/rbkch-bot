@@ -47,7 +47,7 @@ class AddChatHandlerTest extends DatabaseTestBase {
 
     @Test
     void addChatHandler() {
-        updateProcessService.process(TestData.getAdminMessageUpdateWithCommand("/add-description-link"));
+        updateProcessService.process(TestData.getAdminMessageUpdateWithCommand("/add_chat-description-link"));
         updateProcessService.process(TestData.getSimpleMessageUpdateWithCommand("/chats"));
 
         verify(handler, times(1)).handle(any());
