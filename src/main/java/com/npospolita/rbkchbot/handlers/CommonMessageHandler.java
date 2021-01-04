@@ -1,6 +1,7 @@
 package com.npospolita.rbkchbot.handlers;
 
 import com.npospolita.rbkchbot.service.ChatService;
+import com.npospolita.rbkchbot.service.MembershipService;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -10,10 +11,13 @@ public abstract class CommonMessageHandler implements Handler {
     @Autowired
     ChatService chatService;
 
-    //todo add user service
+    @Autowired
+    MembershipService membershipService;
+
     public boolean canHandle(Update update) {
         return update.message() != null
-                && chatService.isInWorkingChat(update.message().chat().id())
+                && (chatService.isInWorkingChat(update.message().chat().id())
+                    || membershipService.isChatMember(update.message().from()))
                 && StringUtils.hasText(update.message().text());
 
     }
