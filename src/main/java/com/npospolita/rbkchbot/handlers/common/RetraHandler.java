@@ -1,6 +1,7 @@
 package com.npospolita.rbkchbot.handlers.common;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
+import com.npospolita.rbkchbot.domain.constant.UserCommand;
 import com.npospolita.rbkchbot.handlers.CommonMessageHandler;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.pengrad.telegrambot.model.Update;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RetraHandler extends CommonMessageHandler {
 
-    private static final String COMMAND = "/retra";
+    private static final UserCommand command = UserCommand.RETRA;
 
     private final TelegramApi telegramApi;
 
@@ -31,6 +32,6 @@ public class RetraHandler extends CommonMessageHandler {
 
     @Override
     public boolean canHandle(Update update) {
-        return super.canHandle(update) && update.message().text().startsWith(COMMAND);
+        return super.canHandle(update) && update.message().text().startsWith(command.getCommand());
     }
 }

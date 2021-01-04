@@ -1,6 +1,7 @@
 package com.npospolita.rbkchbot.handlers.admin;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
+import com.npospolita.rbkchbot.domain.constant.AdminCommand;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.npospolita.rbkchbot.service.MembershipService;
@@ -18,7 +19,7 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class ChatDisableHandler extends AdminMessageHandler {
 
-    private static final String COMMAND = "/disable";
+    private static final AdminCommand command = AdminCommand.DISABLE_CHAT_SUPPORT;
 
     private final TelegramApi api;
     private final ChatService chatService;
@@ -28,7 +29,7 @@ public class ChatDisableHandler extends AdminMessageHandler {
     public Result handle(Update update) {
         chatService.removeWorkingChat(update.message().chat().id());
         membershipService.removeAllMembership(update.message().chat().id());
-        api.sendMessage(update, "Chat disabled.");
+        api.sendMessage(update, command.getResponse());
         return Result.STOP;
     }
 
@@ -36,6 +37,6 @@ public class ChatDisableHandler extends AdminMessageHandler {
     public boolean canHandle(Update update) {
         return super.canHandle(update)
                 && StringUtils.hasText(update.message().text())
-                && update.message().text().startsWith(COMMAND);
+                && update.message().text().startsWith(command.getCommand());
     }
 }

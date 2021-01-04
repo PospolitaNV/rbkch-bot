@@ -17,6 +17,7 @@ public class UpdateProcessService {
     private final List<Handler> handlers;
 
     public void process(Update update) {
+        log.info("Update received: {}", update);
         for (Handler handler : handlers) {
             if (!handler.canHandle(update)) continue;
 

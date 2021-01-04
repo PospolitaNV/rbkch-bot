@@ -16,7 +16,7 @@ public abstract class CommonMessageHandler implements Handler {
 
     public boolean canHandle(Update update) {
         return update.message() != null
-                && (chatService.isInWorkingChat(update.message().chat().id())
+                && (chatService.isInWorkingChat(update.message().chat().id()) //todo is in PERSONAL MESSAGES!
                     || membershipService.isChatMember(update.message().from()))
                 && StringUtils.hasText(update.message().text());
 

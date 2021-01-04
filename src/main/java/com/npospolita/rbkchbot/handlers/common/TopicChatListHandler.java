@@ -2,6 +2,7 @@ package com.npospolita.rbkchbot.handlers.common;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
 import com.npospolita.rbkchbot.domain.TopicChat;
+import com.npospolita.rbkchbot.domain.constant.UserCommand;
 import com.npospolita.rbkchbot.handlers.CommonMessageHandler;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TopicChatListHandler extends CommonMessageHandler {
 
-    private static final String COMMAND = "/chats";
+    private static final UserCommand command = UserCommand.CHAT_LIST;
 
     private final TelegramApi telegramApi;
     private final ChatService chatService;
@@ -35,6 +36,6 @@ public class TopicChatListHandler extends CommonMessageHandler {
 
     @Override
     public boolean canHandle(Update update) {
-        return super.canHandle(update) && update.message().text().startsWith(COMMAND);
+        return super.canHandle(update) && update.message().text().startsWith(command.getCommand());
     }
 }

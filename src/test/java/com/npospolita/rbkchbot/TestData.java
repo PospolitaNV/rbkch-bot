@@ -1,188 +1,128 @@
 package com.npospolita.rbkchbot;
 
+import com.npospolita.rbkchbot.domain.constant.Command;
 import com.pengrad.telegrambot.BotUtils;
+import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Update;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-//todo better test data
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.pengrad.telegrambot.model.Chat.Type.Private;
+import static com.pengrad.telegrambot.model.Chat.Type.supergroup;
+
+@Slf4j
+@Builder
 public class TestData {
 
-    public static final Long DEFAULT_CHAT_ID = -23123123123123L;
+    @Getter
+    @RequiredArgsConstructor
+    public enum ChatType {
+        WORKING(-1L, supergroup), PERSONAL(-10L, Private), OTHER(-100L, Chat.Type.group);
 
-    public static Update getSimpleMessageUpdate() {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"from\": {\n" +
-                "      \"id\": 1231231231,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": -23123123123123,\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"block the news\"\n" +
-                "  }\n" +
-                "}");
+        private final Long chatId;
+        private final Chat.Type chatType;
+    }
+
+    public enum Action {
+        LEFT_CHAT, JOINED_CHAT, POSTED_MESSAGE
+    }
+
+    public enum User {
+        ADMIN, SIMPLE
     }
 
 
-    public static Update getSimpleMessageUpdateWithCommand(String command) {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"from\": {\n" +
-                "      \"id\": 1231231231,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": -23123123123123,\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"" + command + " block the news\"\n" +
-                "  }\n" +
-                "}");
+    public static final AtomicInteger updateIncrement = new AtomicInteger(0);
+    public static final AtomicInteger messageIncrement = new AtomicInteger(0);
+
+    @Builder.Default
+    public ChatType chatType = ChatType.WORKING;
+    @Builder.Default
+    public Command command = null;
+    @Builder.Default
+    public String text = "Some text";
+    @Builder.Default
+    public Action action = Action.POSTED_MESSAGE;
+    @Builder.Default
+    public User user = User.SIMPLE;
+
+    //todo сделать нормальный билдер
+    @SneakyThrows
+    public Update toUpdate() {
+        JSONObject update = new JSONObject()
+                .put("update_id", updateIncrement.incrementAndGet())
+                .put("message", new JSONObject()
+                        .put("message_id", messageIncrement.incrementAndGet()));
+
+        processAction(update);
+        processChatType(update);
+        processCommandAndText(update);
+        return BotUtils.parseUpdate(update.toString());
     }
 
-    public static Update getAdminMessageUpdate() {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"from\": {\n" +
-                "      \"id\": 23452397,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": -23123123123123,\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"block the news\"\n" +
-                "  }\n" +
-                "}");
+    private void processCommandAndText(JSONObject update) throws JSONException {
+        JSONObject message = update.getJSONObject("message");
+        if (command != null) {
+            message.put("text", command.getCommand() + "-" + text);
+        } else {
+            message.put("text", text);
+        }
     }
 
-    public static Update getAdminMessageUpdateWithCommand(String command) {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"from\": {\n" +
-                "      \"id\": 23452397,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": -23123123123123,\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"" + command + "\"\n" +
-                "  }\n" +
-                "}");
+    private void processChatType(JSONObject update) throws JSONException {
+        update.getJSONObject("message")
+                .put("chat", new JSONObject()
+                    .put("id", chatType.getChatId())
+                    .put("title", chatType.name())
+                    .put("type", chatType.getChatType()));
     }
 
-    public static Update getSimpleMessageUpdateWithChat(Long chatId) {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"from\": {\n" +
-                "      \"id\": 1231231231,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": " + chatId + ",\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"block the news\"\n" +
-                "  }\n" +
-                "}");
+    private void processAction(JSONObject update) throws JSONException {
+        JSONObject message = update.getJSONObject("message");
+
+        switch (action) {
+            case LEFT_CHAT:
+                message.put("left_chat_member", user());
+                break;
+            case JOINED_CHAT:
+                message.put("new_chat_members", new JSONArray().put(user()));
+                break;
+            case POSTED_MESSAGE:
+                switch (user) {
+                    case ADMIN:
+                        message.put("from", admin());
+                        break;
+                    case SIMPLE:
+                        message.put("from", user());
+                        break;
+                }
+                break;
+        }
     }
 
-    public static Update getSimpleMessageUpdateWithChatAndCommand(String command, Long chatId) {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"from\": {\n" +
-                "      \"id\": 1231231231,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": " + chatId + ",\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"" + command + "\"\n" +
-                "  }\n" +
-                "}");
+    private JSONObject user() throws JSONException {
+        return new JSONObject()
+                .put("id", 52345)
+                .put("is_bot", false)
+                .put("first_name", "User")
+                .put("username", "UserName");
     }
 
-    public static Update getLeftChatUpdateWithChat(Long chatId) {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"left_chat_member\": {\n" +
-                "      \"id\": 1231231231,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    },\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": " + chatId + ",\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"block the news\"\n" +
-                "  }\n" +
-                "}");
+    private JSONObject admin() throws JSONException {
+        return new JSONObject()
+                .put("id", 23452397)
+                .put("is_bot", false)
+                .put("first_name", "Admin")
+                .put("username", "AdminUsername");
     }
 
-    public static Update getNewChatMemberUpdateWithChat(Long chatId) {
-        return BotUtils.parseUpdate("{\n" +
-                "  \"update_id\": 874199391,\n" +
-                "  \"message\": {\n" +
-                "    \"message_id\": 33111,\n" +
-                "    \"new_chat_members\": [{\n" +
-                "      \"id\": 1231231231,\n" +
-                "      \"is_bot\": false,\n" +
-                "      \"first_name\": \"RRRR\",\n" +
-                "      \"username\": \"RRRR54321\"\n" +
-                "    }],\n" +
-                "    \"chat\": {\n" +
-                "      \"id\": " + chatId + ",\n" +
-                "      \"title\": \"hhh iiiiii ccccc\",\n" +
-                "      \"type\": \"supergroup\"\n" +
-                "    },\n" +
-                "    \"date\": 1579958705,\n" +
-                "    \"text\": \"block the news\"\n" +
-                "  }\n" +
-                "}");
-    }
 
 }
