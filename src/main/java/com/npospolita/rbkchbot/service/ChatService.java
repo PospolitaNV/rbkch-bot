@@ -23,6 +23,7 @@ public class ChatService {
     private final TopicChatRepository topicChatRepository;
     private Set<WorkingChat> workingChats = new HashSet<>();
 
+    //todo add caching
     public boolean isInWorkingChat(Long chatId) {
         if (workingChats.isEmpty()) {
             workingChats.addAll(StreamUtils.createStreamFromIterator(workingChatRepository.findAll().iterator())

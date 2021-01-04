@@ -3,6 +3,7 @@ package com.npospolita.rbkchbot.handlers.admin;
 import com.npospolita.rbkchbot.api.TelegramApi;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
+import com.npospolita.rbkchbot.service.MembershipService;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,12 @@ public class ChatDisableHandler extends AdminMessageHandler {
 
     private final TelegramApi api;
     private final ChatService chatService;
+    private final MembershipService membershipService;
 
     @Override
     public Result handle(Update update) {
         chatService.removeWorkingChat(update.message().chat().id());
+        membershipService.removeAllMembership(update.message().chat().id());
         api.sendMessage(update, "Chat disabled.");
         return Result.STOP;
     }
