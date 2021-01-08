@@ -39,4 +39,8 @@ public class Member {
         return this;
     }
 
+    public void setUsername(String username) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

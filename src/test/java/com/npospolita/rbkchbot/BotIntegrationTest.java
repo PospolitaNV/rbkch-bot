@@ -104,14 +104,9 @@ class BotIntegrationTest extends DatabaseTestBase {
         verify(chatService, times(0)).getTopicChatList();
 
         //enable in-chat processing
-        updateProcessService.process(TestData.builder()
-                .command(AdminCommand.ENABLE_CHAT_SUPPORT)
-                .chatType(TestData.ChatType.WORKING)
-                .user(TestData.User.ADMIN)
-                .build()
-                .toUpdate());
+        enableChat(TestData.ChatType.WORKING, "working");
 
-        //processed in-chat message
+        //processed in-chat message (added membership)
         updateProcessService.process(TestData.builder()
                 .command(UserCommand.CHAT_LIST)
                 .chatType(TestData.ChatType.WORKING)
@@ -188,5 +183,72 @@ class BotIntegrationTest extends DatabaseTestBase {
         verify(chatService, times(0)).getTopicChatList();
     }
 
-    //todo add handlers tests
+    //todo separate tests ?
+    @Test
+    void notifyHandlerTest() {
+        enableChat(TestData.ChatType.WORKING, "working");
+        enableChat(TestData.ChatType.WORKING_2, "working_2");
+
+        updateProcessService.process(TestData.builder()
+                .command(AdminCommand.NOTIFY)
+                .chatType(TestData.ChatType.WORKING)
+                .user(TestData.User.ADMIN)
+                .text("working,working_2-test message")
+                .build()
+                .toUpdate());
+
+        verify(telegramApi, times(1))
+                .sendMessage(eq(TestData.ChatType.WORKING.getChatId()), eq("test message"));
+        verify(telegramApi, times(1))
+                .sendMessage(eq(TestData.ChatType.WORKING_2.getChatId()), eq("test message"));
+
+        //only tagged chats are in broadcast
+        updateProcessService.process(TestData.builder()
+                .command(AdminCommand.NOTIFY)
+                .chatType(TestData.ChatType.WORKING)
+                .user(TestData.User.ADMIN)
+                .text("working-test message2")
+                .build()
+                .toUpdate());
+
+        verify(telegramApi, times(1))
+                .sendMessage(eq(TestData.ChatType.WORKING.getChatId()), eq("test message2"));
+        verify(telegramApi, times(0))
+                .sendMessage(eq(TestData.ChatType.WORKING_2.getChatId()), eq("test message2"));
+
+        //disabled chat is not in broadcast
+        disableChat(TestData.ChatType.WORKING_2);
+
+        updateProcessService.process(TestData.builder()
+                .command(AdminCommand.NOTIFY)
+                .chatType(TestData.ChatType.WORKING)
+                .user(TestData.User.ADMIN)
+                .text("working,working_2-test message3")
+                .build()
+                .toUpdate());
+
+        verify(telegramApi, times(1))
+                .sendMessage(eq(TestData.ChatType.WORKING.getChatId()), eq("test message3"));
+        verify(telegramApi, times(0))
+                .sendMessage(eq(TestData.ChatType.WORKING_2.getChatId()), eq("test message3"));
+    }
+
+    private void enableChat(TestData.ChatType chatType, String tag) {
+        updateProcessService.process(TestData.builder()
+                .command(AdminCommand.ENABLE_CHAT_SUPPORT)
+                .chatType(chatType)
+                .user(TestData.User.ADMIN)
+                .text(tag)
+                .build()
+                .toUpdate());
+    }
+
+    private void disableChat(TestData.ChatType chatType) {
+        updateProcessService.process(TestData.builder()
+                .command(AdminCommand.ENABLE_CHAT_SUPPORT)
+                .chatType(chatType)
+                .user(TestData.User.ADMIN)
+                .build()
+                .toUpdate());
+    }
 }

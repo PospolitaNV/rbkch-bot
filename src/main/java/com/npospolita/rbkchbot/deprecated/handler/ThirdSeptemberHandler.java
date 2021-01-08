@@ -37,6 +37,6 @@ public class ThirdSeptemberHandler implements Handler{
 
     @Override
     public void handle(Update update) {
-        api.sendMessageWithPreview(update.message(), VIDEO_URL);
+        api.sendMessageWithPreview(update, VIDEO_URL);
     }
 }

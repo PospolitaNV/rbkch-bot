@@ -9,6 +9,7 @@ import com.pengrad.telegrambot.request.*;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.GetMyCommandsResponse;
 import com.pengrad.telegrambot.response.SendResponse;
+import com.sun.istack.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -25,39 +26,36 @@ public class TelegramApi {
     private final TelegramBot bot;
 
     public void sendMessage(Update update, String text, ParseMode parseMode) {
-        sendMessage(update.message(), text, parseMode);
+        sendMessage(update.message().chat().id(), update.message().messageId(), text, parseMode, false, true);
     }
 
     public void sendMessage(Update update, String text) {
-        sendMessage(update.message(), text, ParseMode.Markdown);
+        sendMessage(update.message().chat().id(), update.message().messageId(), text, ParseMode.Markdown, false, true);
     }
 
-    public void sendMessageWithPreview(Message message, String text) {
-            SendMessage request = new SendMessage(message.chat().id(), text)
-                    .parseMode(ParseMode.Markdown)
-                    .disableWebPagePreview(false)
-                    .disableNotification(true)
-                    .replyToMessageId(message.messageId());
+    public void sendMessageWithPreview(Update update, String text) {
+        sendMessage(update.message().chat().id(), update.message().messageId(), text, ParseMode.Markdown, true, true);
+    }
+
+    public void sendMessage(Long chatId, String text) {
+        sendMessage(chatId, null, text, ParseMode.Markdown, false, false);
+    }
+
+    private void sendMessage(@NotNull Long chatId, Integer replyToId, @NotNull String text, ParseMode parseMode, boolean withPreview, boolean withReply) {
+            SendMessage request = new SendMessage(chatId, text)
+                    .parseMode(parseMode == null ? ParseMode.Markdown : parseMode)
+                    .disableWebPagePreview(!withPreview)
+                    .disableNotification(true);
+
+            if (withReply) {
+                request.replyToMessageId(replyToId);
+            }
 
             SendResponse response = bot.execute(request);
 
             if (!response.isOk()) {
                 log.error("error: {}", response);
             }
-    }
-
-    public void sendMessage(Message message, String text, ParseMode parseMode) {
-        SendMessage request = new SendMessage(message.chat().id(), text)
-                .parseMode(parseMode)
-                .disableWebPagePreview(true)
-                .disableNotification(true)
-                .replyToMessageId(message.messageId());
-
-        SendResponse response = bot.execute(request);
-
-        if (!response.isOk()) {
-            log.error("error: {}", response);
-        }
     }
 
     public void sendSticker(Update update, String stickerFileId) {

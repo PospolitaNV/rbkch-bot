@@ -35,6 +35,18 @@ public enum AdminCommand implements Command {
             "Отключить бота в этом чате",
             "Command usage: {/disable}",
             "Chat disabled."
+    ),
+    GET_COMMANDS(
+            "/commands",
+            "Получить все команды бота",
+            "Command usage: {/commands}",
+            null
+    ),
+    NOTIFY(
+            "/notify",
+            "Отправить сообщение в указанные чаты",
+            "Command usage: {/notify-chat_tags_comma_separated-message}",
+            null
     );
 
     private final String command;
