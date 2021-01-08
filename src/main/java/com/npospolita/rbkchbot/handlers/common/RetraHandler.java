@@ -2,7 +2,7 @@ package com.npospolita.rbkchbot.handlers.common;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
 import com.npospolita.rbkchbot.domain.constant.UserCommand;
-import com.npospolita.rbkchbot.handlers.CommonMessageHandler;
+import com.npospolita.rbkchbot.handlers.CommonTextMessageHandler;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Order
 @Component
 @RequiredArgsConstructor
-public class RetraHandler extends CommonMessageHandler {
+public class RetraHandler extends CommonTextMessageHandler {
 
     private static final UserCommand command = UserCommand.RETRA;
 

@@ -1,6 +1,7 @@
 package com.npospolita.rbkchbot;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
+import com.npospolita.rbkchbot.controller.WebHookReceiver;
 import com.npospolita.rbkchbot.domain.constant.AdminCommand;
 import com.npospolita.rbkchbot.domain.constant.UserCommand;
 import com.npospolita.rbkchbot.repo.MemberRepository;
@@ -33,6 +34,9 @@ class BotIntegrationTest extends DatabaseTestBase {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    WebHookReceiver webHookReceiver;
 
     @SpyBean
     ChatService chatService;

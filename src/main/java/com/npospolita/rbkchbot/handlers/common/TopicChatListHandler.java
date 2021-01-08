@@ -3,7 +3,7 @@ package com.npospolita.rbkchbot.handlers.common;
 import com.npospolita.rbkchbot.api.TelegramApi;
 import com.npospolita.rbkchbot.domain.TopicChat;
 import com.npospolita.rbkchbot.domain.constant.UserCommand;
-import com.npospolita.rbkchbot.handlers.CommonMessageHandler;
+import com.npospolita.rbkchbot.handlers.CommonTextMessageHandler;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.pengrad.telegrambot.model.Update;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Order
 @Component
 @RequiredArgsConstructor
-public class TopicChatListHandler extends CommonMessageHandler {
+public class TopicChatListHandler extends CommonTextMessageHandler {
 
     private static final UserCommand command = UserCommand.CHAT_LIST;
 

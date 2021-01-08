@@ -48,7 +48,7 @@ public class TestData {
     @Builder.Default
     public Command command = null;
     @Builder.Default
-    public String text = "Some text";
+    public String text = null;
     @Builder.Default
     public Action action = Action.POSTED_MESSAGE;
     @Builder.Default
