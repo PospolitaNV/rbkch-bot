@@ -25,7 +25,7 @@ public class TestData {
     @Getter
     @RequiredArgsConstructor
     public enum ChatType {
-        WORKING(-1L, supergroup), PERSONAL(-10L, Private), OTHER(-100L, Chat.Type.group);
+        WORKING(-1L, supergroup), WORKING_2(-2L, supergroup), PERSONAL(-10L, Private), OTHER(-100L, Chat.Type.group);
 
         private final Long chatId;
         private final Chat.Type chatType;

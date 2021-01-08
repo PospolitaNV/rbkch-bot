@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LeftChatHandler implements Handler {
 
+    public static final String LEFT_CHAT_LINK = "https://www.youtube.com/watch?v=xfT645b6l0s";
     private final TelegramApi api;
 
     @Override
@@ -20,6 +21,6 @@ public class LeftChatHandler implements Handler {
 
     @Override
     public void handle(Update update) {
-        api.sendMessageWithPreview(update.message(), "https://www.youtube.com/watch?v=xfT645b6l0s");
+        api.sendMessageWithPreview(update, LEFT_CHAT_LINK);
     }
 }
