@@ -1,6 +1,7 @@
 package com.npospolita.rbkchbot.handlers.admin;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
+import com.npospolita.rbkchbot.domain.constant.AdminCommand;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.npospolita.rbkchbot.service.ChatService;
 import com.pengrad.telegrambot.model.Update;
@@ -15,18 +16,22 @@ import org.springframework.util.StringUtils;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
 @RequiredArgsConstructor
-public class ChatSetupHandler extends AdminMessageHandler {
+public class ChatEnableHandler extends AdminMessageHandler {
 
-    private static final String COMMAND = "/setup";
+    private static final AdminCommand command = AdminCommand.ENABLE_CHAT_SUPPORT;
 
     private final TelegramApi api;
     private final ChatService chatService;
 
     @Override
     public Result handle(Update update) {
-        String[] split = update.message().text().split(" ");
-        chatService.addWorkingChat(update.message().chat().id(), split.length > 1 ? split[1] : null);
-        api.sendMessage(update, "Chat enabled.");
+        String[] tokens = update.message().text().split("-");
+        if (tokens.length != 2) {
+            api.sendMessage(update, command.getUsage());
+        } else {
+            chatService.addWorkingChat(update.message().chat().id(), tokens[1]);
+            api.sendMessage(update, command.getResponse());
+        }
         return Result.STOP;
     }
 
@@ -34,6 +39,6 @@ public class ChatSetupHandler extends AdminMessageHandler {
     public boolean canHandle(Update update) {
         return super.canHandle(update)
                 && StringUtils.hasText(update.message().text())
-                && update.message().text().startsWith(COMMAND);
+                && update.message().text().startsWith(command.getCommand());
     }
 }

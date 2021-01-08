@@ -1,6 +1,7 @@
 package com.npospolita.rbkchbot.handlers.admin;
 
 import com.npospolita.rbkchbot.api.TelegramApi;
+import com.npospolita.rbkchbot.domain.constant.AdminCommand;
 import com.npospolita.rbkchbot.handlers.Result;
 import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +16,18 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class AddNewCommandHandler extends AdminMessageHandler {
 
-    private static final String COMMAND = "/add_command";
+    private static final AdminCommand command = AdminCommand.COMMAND_ADD;
 
     private final TelegramApi api;
 
     @Override
     public Result handle(Update update) {
-        String text = update.message().text();
-        String[] tokens = text.split("-");
+        String[] tokens = update.message().text().split("-");
         if (tokens.length != 3) {
-            api.sendMessage(update, "Command usage: {/add_command}-{command}-{description}");
+            api.sendMessage(update, command.getUsage());
         } else {
             api.addCommand(tokens[1], tokens[2]);
-            api.sendMessage(update, "Command added successfully.");
+            api.sendMessage(update, command.getResponse());
         }
         return Result.STOP;
     }
@@ -36,6 +36,6 @@ public class AddNewCommandHandler extends AdminMessageHandler {
     public boolean canHandle(Update update) {
         return super.canHandle(update)
                 && StringUtils.hasText(update.message().text())
-                && update.message().text().startsWith(COMMAND);
+                && update.message().text().startsWith(command.getCommand());
     }
 }
