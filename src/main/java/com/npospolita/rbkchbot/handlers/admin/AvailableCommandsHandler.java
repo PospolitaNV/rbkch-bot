@@ -30,7 +30,6 @@ public class AvailableCommandsHandler extends AdminMessageHandler {
         StringBuilder stringBuilder = new StringBuilder();
         for (AdminCommand value : AdminCommand.values()) {
             stringBuilder
-                    .append("Command: ")
                     .append(value.getUsage())
                     .append(",\n")
                     .append(value.getDescription())
