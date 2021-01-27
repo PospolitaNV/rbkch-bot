@@ -15,7 +15,7 @@ public class LeftChatVideoHandler extends LeftChatHandler {
 
     private final TelegramApi telegramApi;
 
-    public static final String LEFT_CHAT_LINK = "https://www.youtube.com/watch?v=xfT645b6l0s";
+    public static final String LEFT_CHAT_LINK = "https://www.youtube.com/watch?v=Q8m0O8o7O94";
 
     @Override
     public Result handle(Update update) {
