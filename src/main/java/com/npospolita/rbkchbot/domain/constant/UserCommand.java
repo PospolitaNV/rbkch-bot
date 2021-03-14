@@ -9,7 +9,8 @@ public enum UserCommand implements Command {
 
     ABOUT("/about", "Получить информацию о боте"),
     RETRA("/retra", "Информация и ресурсы по ретроспективе"),
-    CHAT_LIST("/chats", "Список тематических чатиков РБКача");
+    CHAT_LIST("/chats", "Список тематических чатиков РБКача"),
+    VARI("/вари", "Сварить картинку");
 
     private final String command;
     private final String description;

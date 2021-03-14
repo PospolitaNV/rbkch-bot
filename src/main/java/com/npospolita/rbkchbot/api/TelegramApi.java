@@ -5,7 +5,12 @@ import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ParseMode;
-import com.pengrad.telegrambot.request.*;
+import com.pengrad.telegrambot.request.GetMyCommands;
+import com.pengrad.telegrambot.request.SendDice;
+import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPhoto;
+import com.pengrad.telegrambot.request.SendSticker;
+import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
 import com.pengrad.telegrambot.response.GetMyCommandsResponse;
 import com.pengrad.telegrambot.response.SendResponse;
@@ -56,6 +61,17 @@ public class TelegramApi {
             if (!response.isOk()) {
                 log.error("error: {}", response);
             }
+    }
+
+    public void sendImage(Update update, String url) {
+        SendPhoto request = new SendPhoto(update.message().chat().id(), url)
+                .disableNotification(true);
+
+        SendResponse response = bot.execute(request);
+
+        if (!response.isOk()) {
+            log.error("error: {}", response);
+        }
     }
 
     public void sendSticker(Update update, String stickerFileId) {
