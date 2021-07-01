@@ -19,7 +19,7 @@ public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
                                                                     "|\\bСталин" +
                                                                     "|\\bЛенин\\b" +
                                                                     "|\\bПутин\\b" +
-                                                                    "|\\bамерика", Pattern.CASE_INSENSITIVE)
+                                                                    "|\\bамерика", Pattern.CASE_INSENSITIVE);
 
     @Override
     public Result handle(Update update) {
