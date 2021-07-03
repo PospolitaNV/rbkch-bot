@@ -16,10 +16,14 @@ public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
     private final TelegramApi telegramApi;
     private final static Pattern buzzwordsPattern = Pattern.compile("\\bСССР\\b" +
                                                                     "|\\bКрым\\b" +
+                                                                    "|\\bКПРФ" +
                                                                     "|\\bСталин" +
-                                                                    "|\\bЛенин\\b" +
-                                                                    "|\\bПутин\\b" +
-                                                                    "|\\bамерика", Pattern.CASE_INSENSITIVE);
+                                                                    "|\\bЛенин" +
+                                                                    "|\\bПутин" +
+                                                                    "|\\bХрущёв" +
+                                                                    "|\\bPootin" +
+                                                                    "|\\bАмерика",
+            Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
     @Override
     public Result handle(Update update) {
