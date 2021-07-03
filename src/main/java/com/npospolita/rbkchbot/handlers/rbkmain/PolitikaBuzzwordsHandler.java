@@ -7,6 +7,8 @@ import com.pengrad.telegrambot.model.Update;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 @Component
@@ -14,6 +16,14 @@ import java.util.regex.Pattern;
 public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
 
     private final TelegramApi telegramApi;
+    private final static ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+    private final static List<String> phrases = List.of(
+            "Пошёл ты в политикач, душнила ((",
+            "Как же вы заебали со своей политикой ((",
+            "Я просто хочу деградировать ((",
+            "Когда же ты заткнёшься ((",
+            "ОТКРОЙТЕ ФОРТОЧКУ УЖЕ"
+    );
     private final static Pattern buzzwordsPattern = Pattern.compile("\\bСССР\\b" +
                                                                     "|\\bКрым\\b" +
                                                                     "|\\bКПРФ" +
@@ -27,7 +37,9 @@ public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
 
     @Override
     public Result handle(Update update) {
-        telegramApi.sendMessage(update, "Пошёл ты в политикач, душнила ((");
+        if (threadLocalRandom.nextBoolean()) { // more fluctuations
+            telegramApi.sendMessage(update, phrases.get(threadLocalRandom.nextInt(0, phrases.size())));
+        }
         return Result.STOP;
     }
 
