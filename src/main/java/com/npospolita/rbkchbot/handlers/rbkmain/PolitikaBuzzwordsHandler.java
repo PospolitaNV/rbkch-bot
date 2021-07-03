@@ -25,7 +25,7 @@ public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
             "ОТКРОЙТЕ ФОРТОЧКУ УЖЕ"
     );
     private final static Pattern buzzwordsPattern = Pattern.compile("\\bСССР\\b" +
-                                                                    "|\\bКрым\\b" +
+                                                                    "|\\bКрым" +
                                                                     "|\\bКПРФ" +
                                                                     "|\\bСталин" +
                                                                     "|\\bЛенин" +
