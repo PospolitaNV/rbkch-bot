@@ -30,16 +30,16 @@ public class ChatService {
                     .collect(Collectors.toSet()));
         }
 
-        return workingChats.contains(new WorkingChat(chatId, null));
+        return workingChats.contains(new WorkingChat(chatId, null, null));
     }
 
-    public void addWorkingChat(Long chatId, String tag) {
-        WorkingChat chat = new WorkingChat(chatId, tag);
+    public void addWorkingChat(Long chatId, String tag, String title) {
+        WorkingChat chat = new WorkingChat(chatId, tag, title);
         workingChats.add(workingChatRepository.save(chat));
     }
 
     public void removeWorkingChat(Long chatId) {
-        workingChats.remove(new WorkingChat(chatId, null));
+        workingChats.remove(new WorkingChat(chatId, null, null));
         workingChatRepository.deleteById(chatId);
     }
 

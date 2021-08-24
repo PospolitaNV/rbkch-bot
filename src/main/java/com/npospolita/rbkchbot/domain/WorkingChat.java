@@ -22,4 +22,6 @@ public class WorkingChat {
 
     @EqualsAndHashCode.Exclude
     String tag;
+
+    String name;
 }

@@ -29,7 +29,7 @@ public class ChatEnableHandler extends AdminMessageHandler {
         if (tokens.length != 2) {
             api.sendMessage(update, command.getUsage());
         } else {
-            chatService.addWorkingChat(update.message().chat().id(), tokens[1]);
+            chatService.addWorkingChat(update.message().chat().id(), tokens[1], update.message().chat().title());
             api.sendMessage(update, command.getResponse());
         }
         return Result.STOP;
