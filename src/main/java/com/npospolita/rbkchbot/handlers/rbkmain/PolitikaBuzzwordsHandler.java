@@ -39,8 +39,7 @@ public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
     @Override
     public Result handle(Update update) {
         if (threadLocalRandom.nextBoolean()) { // more fluctuations
-            Collections.shuffle(phrases);
-            telegramApi.sendMessage(update, phrases.get(0));
+            telegramApi.sendMessage(update, phrases.get(threadLocalRandom.nextInt(phrases.size() - 1)));
         }
         return Result.STOP;
     }
