@@ -60,6 +60,10 @@ public class TestData {
         JSONObject update = new JSONObject()
                 .put("update_id", updateIncrement.incrementAndGet())
                 .put("message", new JSONObject()
+                        .put("chat", new JSONObject()
+                                .put("id", chatType.getChatId())
+                                .put("title", chatType.name())
+                                .put("type", chatType.getChatType()))
                         .put("message_id", messageIncrement.incrementAndGet()));
 
         processAction(update);
