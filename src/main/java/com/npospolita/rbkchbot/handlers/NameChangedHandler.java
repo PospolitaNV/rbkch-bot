@@ -11,8 +11,7 @@ public abstract class NameChangedHandler implements Handler {
 
     public boolean canHandle(Update update) {
         return update.message() != null
-                && update.message().newChatTitle() != null
-                && (chatService.isInWorkingChat(update.message().chat().id()));
+                && update.message().newChatTitle() != null;
 
     }
 
