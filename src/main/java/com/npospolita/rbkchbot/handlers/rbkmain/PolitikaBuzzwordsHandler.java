@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class PolitikaBuzzwordsHandler extends CommonTextMessageHandler {
 
