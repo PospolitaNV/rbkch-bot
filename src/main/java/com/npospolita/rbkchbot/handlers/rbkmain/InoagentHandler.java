@@ -16,6 +16,8 @@ public class InoagentHandler extends CommonTextMessageHandler {
 
     private final TelegramApi telegramApi;
 
+    private static final double PROBABILITY = 0.1;
+
     @Value("${inoagent.users}")
     private List<Integer> inoagents;
 
@@ -24,7 +26,8 @@ public class InoagentHandler extends CommonTextMessageHandler {
 
     @Override
     public Result handle(Update update) {
-        if (inoagents.contains(update.message().from().id())) {
+        if (inoagents.contains(update.message().from().id()) &&
+                Math.random() < PROBABILITY) {
             telegramApi.sendMessage(update, inoagentText);
         }
         return Result.STOP;
